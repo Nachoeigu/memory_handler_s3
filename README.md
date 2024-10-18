@@ -1,2 +1,31 @@
-# memory_handler_s3
-This repository allows you to handle memory of Agentic application using Amazon S3 &amp; LangChain / LangGraph
+# MemoryHandlerS3: Memory Handling for Chatbots powered by LLMs
+
+## Overview
+
+MemoryHandlerS3 is a Python application designed to manage chat histories efficiently for chatbots. By leveraging AWS S3, this application enables the storage, retrieval, and manipulation of user chat interactions. 
+Built with Pydantic for data validation, it ensures the integrity and correctness of the chat data, providing a reliable foundation for chatbot memory management.
+
+## Key Features
+
+- **Data Storage**: Upload chat histories to an AWS S3 bucket, enabling persistent storage of user interactions.
+- **Data Retrieval**: Retrieve existing chat histories for users, facilitating continuity in conversations.
+- **Data Management**: Append new messages to existing chat histories and delete chat histories as needed.
+- **Validation**: Use Pydantic to validate chat messages and ensure they adhere to the correct format.
+- **Integration with LangChain**: Convert stored chat histories into LangChain objects for enhanced processing capabilities.
+
+## Components
+
+1. **Message Model**: Represents a single message in the chat history, including the sender's role (`system`, `human`, `ai`), the message content, and the extraction time (`etl_time`).
+
+2. **ChatHistory Model**: A collection of messages, ensuring it contains at least one entry.
+
+3. **MemoryHandlerS3 Class**: Handles interactions with AWS S3, providing methods to upload, retrieve, and delete chat histories. It also incorporates logging for better tracking and debugging.
+
+## Installation
+
+Ensure you have the following prerequisites:
+
+- Python 3.11
+- `boto3` library for AWS interactions
+- `pydantic` for data validation
+- `langchain-core` for message processing
