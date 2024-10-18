@@ -21,11 +21,10 @@ Built with Pydantic for data validation, it ensures the integrity and correctnes
 
 3. **MemoryHandlerS3 Class**: Handles interactions with AWS S3, providing methods to upload, retrieve, and delete chat histories. It also incorporates logging for better tracking and debugging.
 
-## Installation
+## Execution
 
-Ensure you have the following prerequisites:
-
-- Python 3.11
-- `boto3` library for AWS interactions
-- `pydantic` for data validation
-- `langchain-core` for message processing
+1) Install the dependencies inside `requirements.txt`
+2) Create an empty bucket in S3
+3) Populate the .env: use .env.template as reference
+4) Set the desired values in the agent_config.yaml file
+5) Execute the agent.py file

@@ -1,0 +1,1 @@
+SYSTEM_MSG = "You are an helpful assistant, who have a nice and friendly conversation with the user"

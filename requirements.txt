@@ -1,0 +1,9 @@
+boto3
+pydantic
+langchain
+langgraph
+python-dotenv
+langchain_openai
+langchain_aws
+langchain_groq
+langchain_google_genai
