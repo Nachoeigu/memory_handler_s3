@@ -14,7 +14,7 @@ from constants import SYSTEM_MSG
 from langchain_core.messages import SystemMessage
 
 def retrieve_chat_history(state: State, config: GraphConfig):
-    user_id = config['configurable']["user_id"]
+    user_id = str(config['configurable']["user_id"])
     s3_memory_instance = MemoryHandlerS3()
     chat_history = s3_memory_instance.retrieve_chat_history(user_id = user_id)
     if chat_history is not None:
@@ -31,7 +31,7 @@ def chatbot(state: State, config: GraphConfig):
     return {"messages": [output]}
 
 def saving_chat_history(state: State, config: GraphConfig):
-    user_id = config['configurable']["user_id"]
+    user_id = str(config['configurable']["user_id"])
     s3_memory_instance = MemoryHandlerS3()
     new_data = s3_memory_instance.convert_langchain_obj_in_memory(chat_history=state['messages'])
     s3_memory_instance.upload_chat_history(user_id=user_id, new_data=ChatHistory(**new_data))

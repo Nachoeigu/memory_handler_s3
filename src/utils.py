@@ -7,7 +7,7 @@ WORKDIR=os.getenv("WORKDIR")
 os.chdir(WORKDIR)
 sys.path.append(WORKDIR)
 
-from typing import Annotated, List, Literal
+from typing import Annotated, List, Literal, Union
 from typing_extensions import TypedDict
 from langgraph.graph.message import add_messages
 from langchain_core.messages import  HumanMessage, AnyMessage
@@ -23,7 +23,7 @@ class State(TypedDict):
 
 class GraphConfig(TypedDict):
     thread_id: int
-    user_id: str
+    user_id: Union[str, int]
     llm: Literal['groq','openai','google','amazon']
     temperature: float
 
