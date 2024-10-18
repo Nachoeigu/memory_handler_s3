@@ -116,13 +116,12 @@ class MemoryHandlerS3:
         """
         s3_key = f'{user_id}/chat.json'
         
-        try:
-            self.s3.delete_object(Bucket=self.bucket_name, Key=s3_key)
-            return True
-        except Exception as e:
-            logging.error(f"Failed to delete chat history for user {user_id}: {e}")
+        response = self.s3.delete_object(Bucket=self.bucket_name, Key=s3_key)
+        if response['ResponseMetadata']['HTTPStatusCode'] != 200:
             return False
-
+        else:
+            return True
+        
     def convert_memory_in_langchain_obj(self, chat_history: ChatHistory):
         return [SystemMessage(content=message.message, etl_time=message.etl_time) if message.role == 'system' 
           else HumanMessage(content=message.message, id=str(uuid.uuid4()), etl_time=message.etl_time) if message.role == 'human' 
