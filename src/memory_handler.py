@@ -87,13 +87,13 @@ class MemoryHandlerS3:
             self.s3.put_object(Bucket=self.bucket_name, Key=s3_key, Body=full_data.json())
             return True
 
-    def retrieve_chat_history(self, user_id) -> Union[ChatHistory, NoneType]:
+    def retrieve_chat_history(self, user_id: str, number_retrieved_msgs: int) -> Union[ChatHistory, NoneType]:
         """
         Retrieve chat history for a user from S3.
 
         Args:
             user_id (str): The ID of the user whose chat history is being retrieved.
-
+            number_retrieved_msgs (int): The number of latests msgs to retrieve
         Returns:
             str: The contents of the chat history, or None if an error occurred.
         """
@@ -102,7 +102,8 @@ class MemoryHandlerS3:
         try:
             response = self.s3.get_object(Bucket=self.bucket_name, Key=s3_key)
             data = response['Body'].read().decode('utf-8')
-            return ChatHistory(**json.loads(data))
+            data = {'data': json.loads(data)['data'][-number_retrieved_msgs:]}
+            return ChatHistory(**data)
         except Exception as e:
             return None
 

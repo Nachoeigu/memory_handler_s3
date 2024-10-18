@@ -26,7 +26,8 @@ class GraphConfig(TypedDict):
     thread_id: int
     user_id: Union[str, int]
     llm: Literal[*AVAILABLE_MODELS]
-    temperature: float
+    temperature: float = 0
+    number_retrieved_msgs: int = 10
 
 class GraphInput(TypedDict):
     user_query: HumanMessage

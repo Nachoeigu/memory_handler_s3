@@ -44,7 +44,8 @@ if __name__ == '__main__':
             "thread_id": yaml_config['thread_id'],
             "user_id":yaml_config['user_id'],
             'temperature': yaml_config['temperature'],
-            'llm': yaml_config['llm']
+            'llm': yaml_config['llm'],
+            'number_retrieved_msgs': yaml_config['number_retrieved_msgs']
         }
     }
     while True:

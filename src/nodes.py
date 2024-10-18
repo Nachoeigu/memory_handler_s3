@@ -15,8 +15,9 @@ from langchain_core.messages import SystemMessage
 
 def retrieve_chat_history(state: State, config: GraphConfig):
     user_id = str(config['configurable']["user_id"])
+    number_retrieved_msgs = config['configurable']["number_retrieved_msgs"]
     s3_memory_instance = MemoryHandlerS3()
-    chat_history = s3_memory_instance.retrieve_chat_history(user_id = user_id)
+    chat_history = s3_memory_instance.retrieve_chat_history(user_id = user_id, number_retrieved_msgs = number_retrieved_msgs)
     if chat_history is not None:
         chat_history = s3_memory_instance.convert_memory_in_langchain_obj(chat_history=chat_history)
     else:

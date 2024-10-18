@@ -2,3 +2,4 @@ thread_id: 42
 user_id: 10
 temperature: 0
 llm: 'groq|llama-3.2-1b-preview' #place provider|model_name
+number_retrieved_msgs: 10 #the number of latest msgs to retrieve
