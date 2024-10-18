@@ -78,7 +78,7 @@ class MemoryHandlerS3:
         """
         s3_key = f'{user_id}/chat.json'
         
-        existing_data = self.retrieve_chat_history(user_id)
+        existing_data = self.retrieve_chat_history(user_id = user_id, filter_msgs=False)
         if existing_data is None:
             self.s3.put_object(Bucket=self.bucket_name, Key=s3_key, Body=new_data.json())
             return True
@@ -87,7 +87,7 @@ class MemoryHandlerS3:
             self.s3.put_object(Bucket=self.bucket_name, Key=s3_key, Body=full_data.json())
             return True
 
-    def retrieve_chat_history(self, user_id: str, number_retrieved_msgs: int) -> Union[ChatHistory, NoneType]:
+    def retrieve_chat_history(self, user_id: str, filter_msgs:bool=False, number_retrieved_msgs:int=10) -> Union[ChatHistory, NoneType]:
         """
         Retrieve chat history for a user from S3.
 
@@ -101,8 +101,9 @@ class MemoryHandlerS3:
         
         try:
             response = self.s3.get_object(Bucket=self.bucket_name, Key=s3_key)
-            data = response['Body'].read().decode('utf-8')
-            data = {'data': json.loads(data)['data'][-number_retrieved_msgs:]}
+            data = json.loads(response['Body'].read().decode('utf-8'))
+            if filter_msgs:
+                data = {'data': data['data'][-number_retrieved_msgs:]}
             return ChatHistory(**data)
         except Exception as e:
             return None
