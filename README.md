@@ -2,7 +2,7 @@
 
 ## Overview
 
-MemoryHandlerS3 is a Python application designed to manage chat histories efficiently for chatbots. By leveraging AWS S3, this application enables the storage, retrieval, and manipulation of user chat interactions. 
+MemoryHandlerS3 is a Python application designed to manage chat histories efficiently for chatbots. By leveraging AWS S3, this application enables the storage, retrieval, and manipulation of user chat interactions remotely and with persistency.
 Built with Pydantic for data validation, it ensures the integrity and correctness of the chat data, providing a reliable foundation for chatbot memory management.
 
 ## Key Features

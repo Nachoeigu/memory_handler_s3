@@ -47,3 +47,4 @@ def get_model(model, temperature):
         return ChatBedrock(model_id = model_name, model_kwargs = {'temperature':temperature})
     else:
         raise ValueError
+    
