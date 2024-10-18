@@ -10,9 +10,10 @@ sys.path.append(WORKDIR)
 import boto3
 import logging
 from pydantic import BaseModel, field_validator
-from typing import List, Literal, Optional
+from typing import List, Literal, Union
 import re
 import json
+from types import NoneType
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage, AnyMessage
 import uuid
 
@@ -41,6 +42,7 @@ class ChatHistory(BaseModel):
 
 
 class MemoryHandlerS3:
+
     def __init__(self):
         """
         Initialize the MemoryHandlerS3 class.
@@ -85,7 +87,7 @@ class MemoryHandlerS3:
             self.s3.put_object(Bucket=self.bucket_name, Key=s3_key, Body=full_data.json())
             return True
 
-    def retrieve_chat_history(self, user_id) -> Optional[str]:
+    def retrieve_chat_history(self, user_id) -> Union[ChatHistory, NoneType]:
         """
         Retrieve chat history for a user from S3.
 

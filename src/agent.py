@@ -19,8 +19,6 @@ import logging
 logging.basicConfig(level=logging.INFO, 
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
-
-
 graph_builder = StateGraph(State, 
                       input = GraphInput,
                       output = GraphOutput,
@@ -35,9 +33,7 @@ graph_builder.add_edge('retrieve_chat_history', "chatbot")
 graph_builder.add_edge('chatbot', "saving_chat_history")
 graph_builder.add_edge('saving_chat_history', END)
 
-
 graph = graph_builder.compile()
-
 
 if __name__ == '__main__':
     with open(f"{WORKDIR}/agent_config.yaml", "r") as file:
@@ -56,8 +52,13 @@ if __name__ == '__main__':
         if user_input in ['q','quit','exit']:
             break
         output = graph.invoke(
-            input = {"user_query": [HumanMessage(content = user_input, id = uuid.uuid4(), etl_time = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z')]},
+            input = {"user_query": [
+                HumanMessage(
+                    content = user_input, id = uuid.uuid4(), 
+                    etl_time = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'
+                )
+            ]},
             config = configuration          
-            )
+        )
         
         logging.info("Reply:" + output['messages'][-1].content)

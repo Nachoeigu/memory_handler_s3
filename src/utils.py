@@ -10,6 +10,7 @@ sys.path.append(WORKDIR)
 from typing import Annotated, List, Literal, Union
 from typing_extensions import TypedDict
 from langgraph.graph.message import add_messages
+from constants import AVAILABLE_MODELS
 from langchain_core.messages import  HumanMessage, AnyMessage
 from langchain_openai.chat_models import ChatOpenAI
 from langchain_google_genai.chat_models import ChatGoogleGenerativeAI
@@ -24,7 +25,7 @@ class State(TypedDict):
 class GraphConfig(TypedDict):
     thread_id: int
     user_id: Union[str, int]
-    llm: Literal['groq','openai','google','amazon']
+    llm: Literal[*AVAILABLE_MODELS]
     temperature: float
 
 class GraphInput(TypedDict):
@@ -33,14 +34,15 @@ class GraphInput(TypedDict):
 class GraphOutput(TypedDict):
     messages: List[AnyMessage]
 
-def get_model(model, temperature):    
-    if model == "openai":
-        return ChatOpenAI(temperature=temperature, model="gpt-4o-mini")
-    elif model == "google":
-        return ChatGoogleGenerativeAI(temperature=temperature, model="gemini-1.5-pro-exp-0827")
-    elif model == 'groq':
-        return ChatGroq(temperature=temperature, model="llama-3.1-70b-versatile")
-    elif model == 'amazon':
-        return ChatBedrock(model_id = 'anthropic.claude-3-5-sonnet-20240620-v1:0', model_kwargs = {'temperature':temperature})
+def get_model(model, temperature):  
+    provider, model_name = model.split('|')
+    if provider == "openai":
+        return ChatOpenAI(temperature=temperature, model= model_name)
+    elif provider == "google":
+        return ChatGoogleGenerativeAI(temperature=temperature, model=model_name)
+    elif provider == 'groq':
+        return ChatGroq(temperature=temperature, model=model_name)
+    elif provider == 'amazon':
+        return ChatBedrock(model_id = model_name, model_kwargs = {'temperature':temperature})
     else:
         raise ValueError
